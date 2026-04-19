@@ -97,6 +97,7 @@ python3 skills/dev-plan-generator/scripts/new_dev_plan.py \
 ./install.sh dev-plan-generator
 ./install.sh parallel-dev
 ./install.sh plan-eng-review
+./install.sh readme-style
 ```
 
 ### 복수 선택
@@ -146,7 +147,7 @@ python3 skills/dev-plan-generator/scripts/new_dev_plan.py \
 
 ## 📄 예시 / Example
 
-[`examples/implement_example.md`](./examples/implement_example.md)에서 3개 스킬이 함께 동작하는 결과를 확인할 수 있습니다:
+[`examples/implement_example.md`](./examples/implement_example.md)에서 스킬들이 함께 동작하는 결과를 확인할 수 있습니다:
 
 ```text
 implement_example.md
