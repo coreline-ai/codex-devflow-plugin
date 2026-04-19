@@ -1,5 +1,7 @@
 <div align="center">
 
+<img width="800" height="450" alt="개발 워크플로 표준화 플러그인 소개" src="https://github.com/user-attachments/assets/cbf8c7ea-6efb-4a2d-8bde-ff122e8472af" />
+
 # codex-devflow-plugin
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE.md)
