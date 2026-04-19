@@ -1,0 +1,4 @@
+interface:
+  display_name: "README Style"
+  short_description: "Redesign README.md with modern GitHub styling, badges, and icons."
+  default_prompt: "Redesign this project's README.md with modern GitHub styling."
