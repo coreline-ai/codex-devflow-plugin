@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dev Plan Generator"
+  short_description: "Create phased implementation plans with checkboxes."
+  default_prompt: "Create a focused phased dev-plan for this implementation."

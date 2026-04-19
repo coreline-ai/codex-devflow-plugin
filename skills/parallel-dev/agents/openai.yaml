@@ -1,0 +1,4 @@
+interface:
+  display_name: "Parallel Dev"
+  short_description: "Split implementation into safe parallel workstreams."
+  default_prompt: "Split this implementation into parallel workstreams with ownership boundaries."
