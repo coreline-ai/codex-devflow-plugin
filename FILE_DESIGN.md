@@ -18,10 +18,14 @@ codex-devflow-plugin/
 │   │   ├── SKILL.md
 │   │   ├── agents/openai.yaml
 │   │   └── references/parallel-templates.md
-│   └── plan-eng-review/
+│   ├── plan-eng-review/
+│   │   ├── SKILL.md
+│   │   ├── agents/openai.yaml
+│   │   └── references/eng-review-checklist.md
+│   └── readme-style/
 │       ├── SKILL.md
 │       ├── agents/openai.yaml
-│       └── references/eng-review-checklist.md
+│       └── references/readme-style-guide.md
 ├── examples/implement_example.md
 ├── README.md
 ├── FILE_DESIGN.md
@@ -39,6 +43,7 @@ codex-devflow-plugin/
 | `skills/dev-plan-generator` | phased dev-plan 생성 |
 | `skills/parallel-dev` | 병렬 workstream/소유권/병합 순서 설계 |
 | `skills/plan-eng-review` | 구현 전 엔지니어링 리뷰 |
+| `skills/readme-style` | README.md 최신 GitHub 스타일 리디자인 |
 | `install.sh` | 전체/개별 스킬 설치 |
 | `uninstall.sh` | 전체/개별 스킬 제거 |
 | `validate.sh` | 구조 검증 및 temp install smoke |

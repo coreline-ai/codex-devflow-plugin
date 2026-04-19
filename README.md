@@ -9,7 +9,7 @@
 
 **구현 전 작업 흐름을 표준화하는 Codex 스킬 번들**
 
-Standardize your pre-implementation workflow with three focused Codex skills.
+Standardize your pre-implementation workflow with four focused Codex skills.
 
 [설치](#-설치--installation) · [스킬 소개](#-스킬--skills) · [검증](#-검증--validation) · [예시](#-예시--example)
 
@@ -19,13 +19,13 @@ Standardize your pre-implementation workflow with three focused Codex skills.
 
 ## Overview
 
-`codex-devflow-plugin`은 구현 계획 → 엔지니어링 리뷰 → 병렬 분해까지의 워크플로를 하나의 번들로 제공합니다.
+`codex-devflow-plugin`은 구현 계획 → 엔지니어링 리뷰 → 병렬 분해 → README 스타일링까지의 워크플로를 하나의 번들로 제공합니다.
 
 ```text
-  Plan             Review            Parallelize         Execute
+  Plan             Review            Parallelize         Polish
 ┌──────────┐    ┌──────────┐    ┌────────────────┐    ┌──────────┐
-│ dev-plan │ ─▶ │ eng-     │ ─▶ │ parallel-dev   │ ─▶ │ checkbox │
-│ generator│    │ review   │    │ (workstreams)  │    │ tracking │
+│ dev-plan │ ─▶ │ eng-     │ ─▶ │ parallel-dev   │ ─▶ │ readme-  │
+│ generator│    │ review   │    │ (workstreams)  │    │ style    │
 └──────────┘    └──────────┘    └────────────────┘    └──────────┘
 ```
 
@@ -70,6 +70,16 @@ python3 skills/dev-plan-generator/scripts/new_dev_plan.py \
 | **트리거** | `엔지니어링 리뷰`, `review plan`, `architecture review`, `lock in plan` |
 | **출력** | Verdict (`ready` / `needs revision` / `blocked`) + 리스크 · 아키텍처 · 테스트 노트 |
 | **체크 항목** | 아키텍처 · 병렬 안전성 · 엣지케이스 · 보안 · 테스트 커버리지 |
+
+### 4. `readme-style`
+
+> README.md를 최신 GitHub 스타일로 리디자인
+
+| 항목 | 내용 |
+|---|---|
+| **트리거** | `README 스타일링`, `README 다시 만들어줘`, `modernize README`, `add badges` |
+| **출력** | 배지 · 아이콘 · 테이블 · ASCII 다이어그램 · 앵커 네비게이션이 적용된 README.md |
+| **핵심 기능** | shields.io 배지 생성 · 섹션 아이콘 매핑 · 프로젝트 트리 포맷 · 스타일 가이드 참조 |
 
 ---
 
@@ -162,10 +172,14 @@ codex-devflow-plugin/
 │   │   ├── SKILL.md
 │   │   ├── agents/openai.yaml
 │   │   └── references/parallel-templates.md
-│   └── plan-eng-review/
+│   ├── plan-eng-review/
+│   │   ├── SKILL.md
+│   │   ├── agents/openai.yaml
+│   │   └── references/eng-review-checklist.md
+│   └── readme-style/
 │       ├── SKILL.md
 │       ├── agents/openai.yaml
-│       └── references/eng-review-checklist.md
+│       └── references/readme-style-guide.md
 ├── examples/implement_example.md       # 통합 사용 예시
 ├── install.sh                          # 설치 스크립트
 ├── uninstall.sh                        # 제거 스크립트
