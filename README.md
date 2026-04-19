@@ -1,39 +1,87 @@
+<div align="center">
+
 # codex-devflow-plugin
 
-A small Codex skill bundle for implementation planning workflows.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE.md)
+[![Shell](https://img.shields.io/badge/Shell-Bash-4EAA25?logo=gnubash&logoColor=white)](https://www.gnu.org/software/bash/)
+[![Python](https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Codex Skills](https://img.shields.io/badge/Codex-Skills_Bundle-8A2BE2)](https://github.com/coreline-ai/codex-devflow-plugin)
 
-It packages three independently installable skills:
+**구현 전 작업 흐름을 표준화하는 Codex 스킬 번들**
 
-1. `dev-plan-generator` — create phased implementation plans.
-2. `parallel-dev` — split work into safe parallel workstreams.
-3. `plan-eng-review` — review plans for architecture, risk, edge cases, and tests.
+Standardize your pre-implementation workflow with three focused Codex skills.
+
+[설치](#-설치--installation) · [스킬 소개](#-스킬--skills) · [검증](#-검증--validation) · [예시](#-예시--example)
+
+</div>
 
 ---
 
-## 한국어
+## Overview
 
-### 목적
-
-`codex-devflow-plugin`은 구현 전 작업 흐름을 표준화하기 위한 Codex 스킬 번들입니다.
+`codex-devflow-plugin`은 구현 계획 → 엔지니어링 리뷰 → 병렬 분해까지의 워크플로를 하나의 번들로 제공합니다.
 
 ```text
-개발 계획 작성
-→ 엔지니어링 리뷰
-→ 병렬 워크스트림 분해
-→ 구현 가능 체크리스트
+  Plan             Review            Parallelize         Execute
+┌──────────┐    ┌──────────┐    ┌────────────────┐    ┌──────────┐
+│ dev-plan │ ─▶ │ eng-     │ ─▶ │ parallel-dev   │ ─▶ │ checkbox │
+│ generator│    │ review   │    │ (workstreams)  │    │ tracking │
+└──────────┘    └──────────┘    └────────────────┘    └──────────┘
 ```
 
-각 스킬은 독립 설치가 가능합니다.
+각 스킬은 **독립 설치** 가능하며, 함께 사용하면 구현 전 과정을 체계적으로 관리할 수 있습니다.
 
-### 설치
+---
 
-전체 설치:
+## 📦 스킬 / Skills
+
+### 1. `dev-plan-generator`
+
+> 페이즈별 체크박스 기반 구현 계획서 생성
+
+| 항목 | 내용 |
+|---|---|
+| **트리거** | `개발 계획`, `구현 계획`, `dev plan`, `implement_*.md` |
+| **출력** | `dev-plan/implement_YYYYMMDD_HHMMSS.md` |
+| **핵심 섹션** | 개발 목적 · 개발 범위 · 제외 범위 · Phase별 태스크 · 자체 테스트 · 완료 조건 |
+
+```bash
+# 스캐폴딩 스크립트
+python3 skills/dev-plan-generator/scripts/new_dev_plan.py \
+  --dir dev-plan --title "Short goal"
+```
+
+### 2. `parallel-dev`
+
+> 구현 목표를 안전한 병렬 워크스트림으로 분해
+
+| 항목 | 내용 |
+|---|---|
+| **트리거** | `병렬 구현`, `split work`, `parallel workstreams`, `ownership boundaries` |
+| **출력** | Workstream Card · Ownership Matrix · Merge Sequence |
+| **핵심 기능** | 파일 소유권 분리 · 공유 계약 정의 · Sub-Agent 프롬프트 생성 |
+
+### 3. `plan-eng-review`
+
+> 코딩 전 구현 계획 엔지니어링 리뷰
+
+| 항목 | 내용 |
+|---|---|
+| **트리거** | `엔지니어링 리뷰`, `review plan`, `architecture review`, `lock in plan` |
+| **출력** | Verdict (`ready` / `needs revision` / `blocked`) + 리스크 · 아키텍처 · 테스트 노트 |
+| **체크 항목** | 아키텍처 · 병렬 안전성 · 엣지케이스 · 보안 · 테스트 커버리지 |
+
+---
+
+## 🚀 설치 / Installation
+
+### 전체 설치
 
 ```bash
 ./install.sh all
 ```
 
-개별 설치:
+### 개별 설치
 
 ```bash
 ./install.sh dev-plan-generator
@@ -41,77 +89,105 @@ It packages three independently installable skills:
 ./install.sh plan-eng-review
 ```
 
-설치 위치:
-
-```text
-${CODEX_HOME:-$HOME/.codex}/skills/<skill-name>
-```
-
-### 제거
+### 복수 선택
 
 ```bash
-./uninstall.sh all
-./uninstall.sh parallel-dev
-```
-
-### 검증
-
-```bash
-./validate.sh
-```
-
-검증 내용:
-
-- `SKILL.md` frontmatter 확인
-- TODO placeholder 확인
-- shell script syntax 확인
-- `new_dev_plan.py` smoke
-- temp `CODEX_HOME` 전체 설치/제거 smoke
-
-### 기존 스킬 충돌
-
-설치 스크립트는 같은 폴더명이 이미 있으면 자동 백업합니다.
-
-```text
-~/.codex/skills/parallel-dev.backup.YYYYMMDD_HHMMSS
-```
-
-또한 다른 폴더에 동일한 `name:`을 가진 스킬이 있으면 경고합니다. 예를 들어 gstack 계열 `plan-eng-review`가 이미 설치되어 있으면 중복 경고가 날 수 있습니다.
-
----
-
-## English
-
-### Overview
-
-`codex-devflow-plugin` bundles three focused Codex skills for implementation planning:
-
-- `dev-plan-generator`
-- `parallel-dev`
-- `plan-eng-review`
-
-Each skill can be installed independently or all at once.
-
-### Install
-
-```bash
-./install.sh all
 ./install.sh dev-plan-generator parallel-dev
 ```
 
-### Uninstall
+> **설치 위치:** `${CODEX_HOME:-$HOME/.codex}/skills/<skill-name>`
+
+### 기존 스킬 충돌 처리
+
+| 상황 | 동작 |
+|---|---|
+| 같은 폴더명이 이미 존재 | 자동 백업 → `<skill>.backup.YYYYMMDD_HHMMSS` |
+| 다른 폴더에 동일 `name:` 스킬 존재 | 경고 메시지 출력 |
+
+---
+
+## 🗑️ 제거 / Uninstall
 
 ```bash
+# 전체 제거
 ./uninstall.sh all
-./uninstall.sh plan-eng-review
+
+# 개별 제거
+./uninstall.sh parallel-dev
 ```
 
-### Validate
+---
+
+## ✅ 검증 / Validation
 
 ```bash
 ./validate.sh
 ```
 
-## License
+| 검증 항목 | 설명 |
+|---|---|
+| Frontmatter | `SKILL.md`의 `name:`, `description:` 필드 확인 |
+| TODO check | 미완성 placeholder 잔류 여부 |
+| Shell syntax | `install.sh`, `uninstall.sh`, `validate.sh` 문법 검사 |
+| Script smoke | `new_dev_plan.py` 실행 테스트 |
+| Install smoke | 임시 `CODEX_HOME`에서 전체 설치/제거 라운드트립 |
 
-MIT. See [`LICENSE.md`](./LICENSE.md).
+---
+
+## 📄 예시 / Example
+
+[`examples/implement_example.md`](./examples/implement_example.md)에서 3개 스킬이 함께 동작하는 결과를 확인할 수 있습니다:
+
+```text
+implement_example.md
+├── 개발 목적 / 범위 / 제외 범위      ← dev-plan-generator
+├── Engineering Review 테이블         ← plan-eng-review
+├── Parallel Workstreams 테이블       ← parallel-dev
+└── Merge Sequence                    ← parallel-dev
+```
+
+---
+
+## 📁 프로젝트 구조
+
+```text
+codex-devflow-plugin/
+├── skills/
+│   ├── dev-plan-generator/
+│   │   ├── SKILL.md                    # 스킬 정의
+│   │   ├── agents/openai.yaml          # Agent UI 메타데이터
+│   │   ├── scripts/new_dev_plan.py     # 계획서 스캐폴딩 스크립트
+│   │   └── references/dev-plan-template.md
+│   ├── parallel-dev/
+│   │   ├── SKILL.md
+│   │   ├── agents/openai.yaml
+│   │   └── references/parallel-templates.md
+│   └── plan-eng-review/
+│       ├── SKILL.md
+│       ├── agents/openai.yaml
+│       └── references/eng-review-checklist.md
+├── examples/implement_example.md       # 통합 사용 예시
+├── install.sh                          # 설치 스크립트
+├── uninstall.sh                        # 제거 스크립트
+├── validate.sh                         # 검증 스크립트
+├── FILE_DESIGN.md                      # 파일 설계 문서
+├── LICENSE.md                          # MIT License
+└── .gitignore
+```
+
+---
+
+## 🤝 Contributing
+
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/my-skill`)
+3. Run validation (`./validate.sh`)
+4. Commit and open a Pull Request
+
+---
+
+## 📜 License
+
+MIT License — see [`LICENSE.md`](./LICENSE.md) for details.
+
+Copyright (c) 2026 [Coreline AI](https://github.com/coreline-ai)
